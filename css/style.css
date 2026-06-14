@@ -1,0 +1,478 @@
+/* =========================================================
+   池田美装 コーポレートサイト スタイル
+   ブランドカラーは :root の --brand 一箇所で管理
+   ========================================================= */
+
+:root {
+  --brand: #0fa891;          /* ブランドカラー（美装見積りナビと統一） */
+  --brand-dark: #0c8576;     /* ホバー等で使う濃いめ */
+  --text: #1a1a1a;           /* 基本文字色 */
+  --text-light: #6b7270;     /* 補助テキスト */
+  --bg: #ffffff;             /* 背景（白） */
+  --bg-gray: #f6f7f7;        /* 薄いグレー背景 */
+  --border: #e4e7e6;         /* 罫線 */
+  --container: 1080px;       /* コンテナ最大幅 */
+  --radius: 6px;
+  --font-body: "Noto Sans JP", sans-serif;              /* 本文 */
+  --font-heading: "Shippori Mincho", "Noto Serif JP", serif; /* 見出し（明朝） */
+}
+
+/* ---------- リセット ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+h1, h2, h3, p { margin: 0; }
+
+/* オシャレな見出し書体（明朝系）。本文は Noto Sans JP のまま */
+.logo,
+.hero-title,
+.section-title,
+.service-card h3,
+.reason-item h3,
+.signature,
+.footer-logo,
+.company-table th {
+  font-family: var(--font-heading);
+}
+
+/* ---------- 共通レイアウト ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section { padding: 100px 0; }
+
+.section-label {
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-bottom: 48px;
+}
+
+/* ---------- ① ヘッダー ---------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: saturate(180%) blur(8px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  color: var(--text);
+}
+
+.nav ul {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav a {
+  font-size: 0.92rem;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.nav a:hover { color: var(--brand); }
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--brand);
+  transition: width 0.25s;
+}
+
+.nav a:hover::after { width: 100%; }
+
+/* ハンバーガー（スマホ用、PCでは非表示） */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.is-open span:nth-child(2) { opacity: 0; }
+.hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- ② ヒーロー ---------- */
+.hero {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  margin-top: 68px; /* 固定ヘッダー分 */
+  background: url("../assets/hero.png") center / cover no-repeat;
+  color: #fff;
+  overflow: hidden;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  /* 左ほど濃い暗幕。白文字を読みやすくしつつ右側の眺望は活かす */
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.32) 45%, rgba(0, 0, 0, 0.05) 100%);
+}
+
+.hero-content { position: relative; }
+
+.hero-title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  margin-bottom: 24px;
+}
+
+.hero-sub {
+  font-size: 1.02rem;
+  font-weight: 400;
+  line-height: 2;
+  max-width: 640px;
+}
+
+/* ---------- ③ 想い ---------- */
+.message { background: var(--bg); }
+
+.message-body { max-width: 760px; }
+
+.message-body p { margin-bottom: 22px; }
+
+.signature {
+  margin-top: 32px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.message-photo {
+  width: 100%;
+  border-radius: var(--radius);
+  margin-top: 40px;
+  display: block;
+}
+
+/* ---------- ④ 事業内容 ---------- */
+.services { background: var(--bg-gray); }
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+/* 各サービスは「タイトル＋Before/After＋説明」入りの1枚画像で表示 */
+.service-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.service-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---------- ⑤ 選ばれる理由 ---------- */
+.reasons { background: var(--bg); }
+
+.reason-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px 48px;
+}
+
+.reason-item {
+  border-top: 2px solid var(--brand);
+  padding-top: 22px;
+}
+
+.reason-num {
+  display: block;
+  color: var(--brand);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+
+.reason-item h3 {
+  font-size: 1.12rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.reason-item p {
+  font-size: 0.94rem;
+  color: var(--text-light);
+}
+
+/* ---------- ⑥ 会社概要 ---------- */
+.company { background: var(--bg-gray); }
+
+.company-table { max-width: 760px; }
+
+.company-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.company-table th,
+.company-table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 18px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.company-table th {
+  width: 150px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.company-table td { color: var(--text-light); }
+
+/* ---------- ⑦ お問い合わせ ---------- */
+.contact { background: var(--bg); }
+
+.contact-inner { max-width: 620px; }
+
+.contact-lead { margin-bottom: 32px; }
+
+.contact-list {
+  margin: 0 0 36px;
+  border-top: 1px solid var(--border);
+}
+
+.contact-list > div {
+  display: flex;
+  gap: 24px;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-list dt {
+  width: 110px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.contact-list dd { margin: 0; }
+
+.contact-list a { color: var(--brand-dark); }
+
+.contact-list a:hover { text-decoration: underline; }
+
+.sns-links { display: flex; gap: 16px; }
+
+.sns-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--bg-gray);
+  color: var(--brand-dark);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.sns-link:hover {
+  background: var(--brand);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ---------- ⑧ フッター ---------- */
+.site-footer {
+  background: var(--text);
+  color: #fff;
+  padding: 48px 0;
+}
+
+.footer-inner { text-align: center; }
+
+.footer-logo {
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.footer-addr {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 20px;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.05em;
+}
+
+/* ---------- スクロールフェードイン ---------- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* =========================================================
+   レスポンシブ（ブレークポイント 768px）
+   ========================================================= */
+@media (max-width: 768px) {
+
+  .section { padding: 64px 0; }
+  .section-title { font-size: 1.5rem; margin-bottom: 32px; }
+
+  /* ナビをスライドメニューに */
+  .hamburger { display: flex; }
+
+  .nav {
+    position: fixed;
+    top: 68px;
+    right: 0;
+    width: 70%;
+    max-width: 300px;
+    height: calc(100vh - 68px);
+    background: var(--bg);
+    border-left: 1px solid var(--border);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    box-shadow: -8px 0 24px rgba(0, 0, 0, 0.06);
+  }
+
+  .nav.is-open { transform: translateX(0); }
+
+  .nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 12px 0;
+  }
+
+  .nav li { border-bottom: 1px solid var(--border); }
+
+  .nav a {
+    display: block;
+    padding: 16px 28px;
+    font-size: 1rem;
+  }
+
+  .nav a::after { display: none; }
+
+  /* ヒーロー */
+  .hero { min-height: 64vh; }
+  .hero-title { font-size: 1.8rem; }
+  .hero-sub { font-size: 0.95rem; }
+
+  /* グリッドを1カラムに */
+  .service-grid { grid-template-columns: 1fr; gap: 20px; }
+  .reason-grid { grid-template-columns: 1fr; gap: 32px; }
+
+  /* 会社概要テーブルを縦積み */
+  .company-table th,
+  .company-table td {
+    display: block;
+    width: 100%;
+    padding: 6px 4px;
+    border-bottom: none;
+  }
+
+  .company-table th { padding-top: 16px; }
+
+  .company-table td {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* お問い合わせ */
+  .contact-list > div { flex-direction: column; gap: 4px; }
+  .contact-list dt { width: auto; }
+}
